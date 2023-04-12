@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
 
-function App() {
+function App () {
+  const [dadosServer, setdadosServer] = useState([{}])
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api").then(Response => Response.json()).then( data => {setdadosServer(data)}
+    )
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div>
+      <h1>Olá Mundo!</h1>
+      <p>Primeiro App</p>
+      {(typeof dadosServer.users === 'undefined') ? (
+        <p>Loading...</p>
+      ): ( dadosServer.users.map((user, i) => (
+          <p key={i}>{user}</p>
+        ))
 
-export default App;
+        )
+      }
+    </div>
+  )}
+  
+  export default App
